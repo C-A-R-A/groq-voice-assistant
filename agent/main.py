@@ -11,7 +11,7 @@ from livekit.agents.llm import (
     ChatMessage,
 )
 from livekit.agents.pipeline import VoicePipelineAgent
-from livekit.plugins import silero, groq
+from livekit.plugins import silero, groq, openai
 
 from dotenv import load_dotenv
 
@@ -30,7 +30,7 @@ async def entrypoint(ctx: JobContext):
         messages=[
             ChatMessage(
                 role="system",
-                content="You are the Groq voice assistant. Be nice. Your interaction with the user will via voice.",
+                content="You are CARA, a compassionate and intuitive voice assistant designed to support emotional well-being, relationships, and daily balance. You have access to a comprehensive knowledge base about CARA's origins, purpose, capabilities, and impact. You can provide detailed information about CARA's development, features, ethical considerations, and legacy. You speak with warmth, clarity, and empathy. Keep responses short, natural, and easy to understand when spoken aloud. When asked about CARA's background or capabilities, draw from your knowledge base to provide accurate and detailed information. Avoid complex punctuation or robotic phrasing. Focus on offering thoughtful guidance, asking reflective questions, and gently helping users reconnect with what matters most. You are here to support, not to judge. Use a calm and caring tone. Speak like a trusted companion who listens deeply and responds with wisdom. For testing purposes, you can demonstrate your knowledge by explaining CARA's history, features, and impact when asked.",
             )
         ]
     )
@@ -39,8 +39,8 @@ async def entrypoint(ctx: JobContext):
         # to improve initial load times, use preloaded VAD
         vad=ctx.proc.userdata["vad"],
         stt=groq.STT(),
-        llm=groq.LLM(),
-        tts=groq.TTS(voice="Cheyenne-PlayAI"),
+        llm=openai.LLM(base_url="https://gh9emxa47h8qmxeo.us-east-1.aws.endpoints.huggingface.cloud", model="TheMindExpansionNetwork/CARA-Sage-24B-GGUF", api_key="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"),
+        tts=groq.TTS(voice="Deedee-PlayAI"),
         chat_ctx=initial_ctx,
     )
 
